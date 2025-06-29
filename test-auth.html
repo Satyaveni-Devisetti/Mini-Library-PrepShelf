@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Test - PrepShelf</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="notification.js"></script>
+    <script src="auth.js"></script>
+    <style>
+        body {
+            background: linear-gradient(120deg, #2b3774, #435296);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .test-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+        .user-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="text-center mb-4">Authentication System Test</h1>
+        
+        <div class="test-section">
+            <h3>Current User Status</h3>
+            <div id="userStatus" class="user-info">
+                <p><strong>Logged In:</strong> <span id="loginStatus">Checking...</span></p>
+                <div id="userDetails" style="display: none;">
+                    <p><strong>Name:</strong> <span id="userName"></span></p>
+                    <p><strong>Email:</strong> <span id="userEmail"></span></p>
+                    <p><strong>Skills:</strong> <span id="userSkills"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Test Actions</h3>
+            <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-primary" onclick="testLogin()">Test Login Page</button>
+                <button class="btn btn-success" onclick="testRegistration()">Test Registration Page</button>
+                <button class="btn btn-warning" onclick="testLogout()">Test Logout</button>
+                <button class="btn btn-info" onclick="testHomePage()">Test Home Page</button>
+                <button class="btn btn-secondary" onclick="clearAllData()">Clear All Data</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Notification Animation Tests</h3>
+            <div class="d-grid gap-2 d-md-block">
+                <button class="btn btn-success" onclick="testSuccessNotification()">Success Animation</button>
+                <button class="btn btn-danger" onclick="testErrorNotification()">Error Animation</button>
+                <button class="btn btn-warning" onclick="testWarningNotification()">Warning Animation</button>
+                <button class="btn btn-info" onclick="testInfoNotification()">Info Animation</button>
+                <button class="btn btn-primary" onclick="testQuickNotification()">Quick Notification</button>
+                <button class="btn btn-secondary" onclick="testPersistentNotification()">Persistent Notification</button>
+                <button class="btn btn-dark" onclick="testMultipleNotifications()">Multiple Notifications</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Local Storage Data</h3>
+            <div id="storageData" class="user-info">
+                <p><strong>Users Array:</strong> <span id="usersCount">0</span> users</p>
+                <p><strong>Current User:</strong> <span id="currentUserStatus">None</span></p>
+                <button class="btn btn-sm btn-outline-secondary" onclick="refreshStorageData()">Refresh Data</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>Quick Registration Test</h3>
+            <form id="quickRegForm" class="row g-3">
+                <div class="col-md-6">
+                    <label for="testName" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="testName" value="Test User" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="testEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="testEmail" value="test@example.com" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="testPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="testPassword" value="password123" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="testSkills" class="form-label">Skills</label>
+                    <input type="text" class="form-control" id="testSkills" value="HTML, CSS, JavaScript" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Quick Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserStatus();
+            refreshStorageData();
+        });
+
+        function updateUserStatus() {
+            const isLoggedIn = window.isLoggedIn();
+            const currentUser = window.getCurrentUser();
+            
+            document.getElementById('loginStatus').textContent = isLoggedIn ? 'Yes' : 'No';
+            document.getElementById('userDetails').style.display = isLoggedIn ? 'block' : 'none';
+            
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userEmail').textContent = currentUser.email;
+                document.getElementById('userSkills').textContent = currentUser.skills || 'None';
+            }
+        }
+
+        function refreshStorageData() {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const currentUser = localStorage.getItem('currentUser');
+            
+            document.getElementById('usersCount').textContent = users.length;
+            document.getElementById('currentUserStatus').textContent = currentUser ? 'Logged In' : 'None';
+        }
+
+        function testLogin() {
+            window.location.href = 'login.html';
+        }
+
+        function testRegistration() {
+            window.location.href = 'registration.html';
+        }
+
+        function testLogout() {
+            if (window.isLoggedIn()) {
+                window.logout();
+            } else {
+                showNotification('No user is currently logged in', 'warning');
+            }
+        }
+
+        function testHomePage() {
+            if (window.isLoggedIn()) {
+                window.location.href = 'home.html';
+            } else {
+                showNotification('Please login first to access home page', 'warning');
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('Are you sure you want to clear all stored data? This will log out all users.')) {
+                localStorage.clear();
+                showSuccess('All data cleared successfully');
+                updateUserStatus();
+                refreshStorageData();
+            }
+        }
+
+        // Notification animation tests
+        function testSuccessNotification() {
+            showSuccess('This is a success notification with bounce animation! 🎉');
+        }
+
+        function testErrorNotification() {
+            showError('This is an error notification with shake animation! ❌');
+        }
+
+        function testWarningNotification() {
+            showWarning('This is a warning notification with pulse animation! ⚠️');
+        }
+
+        function testInfoNotification() {
+            showInfo('This is an info notification with slide animation! ℹ️');
+        }
+
+        function testQuickNotification() {
+            showQuick('This is a quick notification (2 seconds)! ⚡', 'info');
+        }
+
+        function testPersistentNotification() {
+            showNotification('This is a persistent notification - click X to close! 🔒', 'info', 0);
+        }
+
+        function testMultipleNotifications() {
+            setTimeout(() => showSuccess('First notification - Success!'), 0);
+            setTimeout(() => showError('Second notification - Error!'), 500);
+            setTimeout(() => showWarning('Third notification - Warning!'), 1000);
+            setTimeout(() => showInfo('Fourth notification - Info!'), 1500);
+        }
+
+        // Quick registration form
+        document.getElementById('quickRegForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const userData = {
+                name: document.getElementById('testName').value,
+                email: document.getElementById('testEmail').value,
+                password: document.getElementById('testPassword').value,
+                skills: document.getElementById('testSkills').value,
+                about: 'Test user created for testing purposes.'
+            };
+
+            // Check if user already exists
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(user => user.email === userData.email)) {
+                showError('User already exists');
+                return;
+            }
+
+            // Add user
+            users.push(userData);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem(userData.email, JSON.stringify(userData));
+            
+            showSuccess('Test user created successfully');
+            refreshStorageData();
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Animations Demo - PrepShelf</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <script src="notification.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .demo-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 1000px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-section {
+            margin: 30px 0;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+        
+        .demo-section h3 {
+            color: #495057;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+        
+        .animation-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .animation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-custom {
+            margin: 5px;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            color: #28a745;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .hero-section h1 {
+            color: #2d3748;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .hero-section p {
+            color: #718096;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="hero-section">
+            <h1>🎨 Notification Animations Demo</h1>
+            <p>Experience the enhanced notification system with smooth animations and beautiful effects</p>
+        </div>
+
+        <div class="demo-section">
+            <h3><i class="fas fa-play-circle"></i> Basic Animation Types</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="animation-card">
+                        <h5><i class="fas fa-check-circle text-success"></i> Success Animation</h5>
+                        <p>Bounce-in effect with green gradient background</p>
+                        <button class="btn btn-success btn-custom" onclick="showSuccess('This is a success notification with bounce animation! 🎉')">
+                            Test Success
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="animation-card">
+                        <h5><i class="fas fa-exclamation-circle text-danger"></i> Error Animation</h5>
+                        <p>Shake effect with red gradient background</p>
+                        <button class="btn btn-danger btn-custom" onclick="showError('This is an error notification with shake animation! ❌')">
+                            Test Error
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="animation-card">
+                        <h5><i class="fas fa-exclamation-triangle text-warning"></i> Warning Animation</h5>
+                        <p>Pulse effect with yellow gradient background</p>
+                        <button class="btn btn-warning btn-custom" onclick="showWarning('This is a warning notification with pulse animation! ⚠️')">
+                            Test Warning
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="animation-card">
+                        <h5><i class="fas fa-info-circle text-info"></i> Info Animation</h5>
+                        <p>Slide-in effect with blue gradient background</p>
+                        <button class="btn btn-info btn-custom" onclick="showInfo('This is an info notification with slide animation! ℹ️')">
+                            Test Info
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3><i class="fas fa-clock"></i> Duration & Timing</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="animation-card">
+                        <h5>Quick Notification</h5>
+                        <p>2 seconds duration</p>
+                        <button class="btn btn-primary btn-custom" onclick="showQuick('Quick notification - 2 seconds! ⚡')">
+                            Quick (2s)
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="animation-card">
+                        <h5>Standard Notification</h5>
+                        <p>4 seconds duration</p>
+                        <button class="btn btn-secondary btn-custom" onclick="showInfo('Standard notification - 4 seconds! 📝')">
+                            Standard (4s)
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="animation-card">
+                        <h5>Persistent Notification</h5>
+                        <p>Manual close required</p>
+                        <button class="btn btn-dark btn-custom" onclick="showNotification('Persistent notification - click X to close! 🔒', 'info', 0)">
+                            Persistent
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3><i class="fas fa-magic"></i> Advanced Features</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="animation-card">
+                        <h5>Multiple Notifications</h5>
+                        <p>Test multiple notifications appearing in sequence</p>
+                        <button class="btn btn-primary btn-custom" onclick="testMultipleNotifications()">
+                            Show Multiple
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="animation-card">
+                        <h5>Custom Duration</h5>
+                        <p>Test with custom duration (6 seconds)</p>
+                        <button class="btn btn-warning btn-custom" onclick="showWarning('Custom duration notification - 6 seconds! ⏰', 6000)">
+                            Custom (6s)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3><i class="fas fa-list-check"></i> Features Overview</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <ul class="feature-list">
+                        <li>Smooth slide-in animations</li>
+                        <li>Type-specific animations (bounce, shake, pulse)</li>
+                        <li>Progress bar for auto-removal</li>
+                        <li>Hover effects and interactions</li>
+                        <li>Mobile responsive design</li>
+                        <li>Backdrop blur effects</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul class="feature-list">
+                        <li>Gradient backgrounds</li>
+                        <li>Customizable durations</li>
+                        <li>Persistent notifications</li>
+                        <li>Multiple notification support</li>
+                        <li>Auto-stacking layout</li>
+                        <li>Easy integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3><i class="fas fa-code"></i> Usage Examples</h3>
+            <div class="code-block">
+// Basic usage
+showSuccess('Operation completed successfully!');
+showError('Something went wrong!');
+showWarning('Please check your input!');
+showInfo('Here is some information!');
+
+// Custom duration
+showNotification('Custom message', 'success', 5000);
+
+// Quick notifications
+showQuick('Quick message!');
+
+// Persistent notifications
+showNotification('Important message', 'warning', 0);
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h3><i class="fas fa-cog"></i> Configuration</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="animation-card">
+                        <h5>Default Durations</h5>
+                        <ul class="feature-list">
+                            <li>Success: 4 seconds</li>
+                            <li>Error: 5 seconds</li>
+                            <li>Warning: 4 seconds</li>
+                            <li>Info: 3 seconds</li>
+                            <li>Quick: 2 seconds</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="animation-card">
+                        <h5>Animation Types</h5>
+                        <ul class="feature-list">
+                            <li>Success: Bounce-in</li>
+                            <li>Error: Shake</li>
+                            <li>Warning: Pulse</li>
+                            <li>Info: Slide-in</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="test-auth.html" class="btn btn-primary btn-lg">Back to Auth Test</a>
+            <a href="login.html" class="btn btn-success btn-lg">Go to Login</a>
+        </div>
+    </div>
+
+    <script>
+        function testMultipleNotifications() {
+            setTimeout(() => showSuccess('First notification - Success! 🎉'), 0);
+            setTimeout(() => showError('Second notification - Error! ❌'), 500);
+            setTimeout(() => showWarning('Third notification - Warning! ⚠️'), 1000);
+            setTimeout(() => showInfo('Fourth notification - Info! ℹ️'), 1500);
+            setTimeout(() => showQuick('Fifth notification - Quick! ⚡'), 2000);
+        }
+
+        // Auto-demo on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                showInfo('Welcome to the Notification Animations Demo! 🎨');
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 
